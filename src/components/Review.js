@@ -42,47 +42,47 @@ const reviews = [
 const Review = () => {
   const [index, setIndex] = useState(0);
   const { id, name, job, image, text } = reviews[index];
-
-  // Handle Next Review
+  
   const nextReview = () => {
     setIndex((prevIndex) => (prevIndex + 1) % reviews.length);
   };
 
-  // Handle Previous Review
   const prevReview = () => {
     setIndex((prevIndex) => (prevIndex - 1 + reviews.length) % reviews.length);
   };
 
-  // Handle Random Review
   const randomReview = () => {
-    let newIndex;
-    do {
+    let newIndex = Math.floor(Math.random() * reviews.length);
+    while (newIndex === index) {
       newIndex = Math.floor(Math.random() * reviews.length);
-    } while (newIndex === index);
+    }
     setIndex(newIndex);
   };
 
   return (
     <article className="review">
-      <img src={image} alt={name} className="person-img"  style={{
-        width:"20%",
-      }}/>
+      <img 
+        src={image} 
+        alt={`${name}'s profile picture`} 
+        className="person-img" 
+        style={{ width: "150px", borderRadius: "50%" }}
+      />
       <h4 id={`author-${id}`} className="author">
         {name}
       </h4>
       <p className="job">{job}</p>
       <p className="info">{text}</p>
-
+      
       <div>
-        <button className="prev-btn" onClick={prevReview}>
+        <button className="prev-btn" onClick={prevReview} aria-label="Previous Review">
           Prev
         </button>
-        <button className="next-btn" onClick={nextReview}>
+        <button className="next-btn" onClick={nextReview} aria-label="Next Review">
           Next
         </button>
       </div>
 
-      <button className="random-btn" onClick={randomReview}>
+      <button className="random-btn" onClick={randomReview} aria-label="Surprise Me">
         Surprise Me
       </button>
     </article>
